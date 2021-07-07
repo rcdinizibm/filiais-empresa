@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="sys_class_name" label="Class" language="en" table="x_482726_cadastro_cadastro_de_filiais">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>sys_class_name</element>
+            <help/>
+            <hint/>
+            <label>Class</label>
+            <language>en</language>
+            <name>x_482726_cadastro_cadastro_de_filiais</name>
+            <plural>Class</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-07-07 21:57:08</sys_created_on>
+            <sys_id>f17608d01b55301043784196bc4bcbbf</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Class</sys_name>
+            <sys_package display_value="Cadastro de Filiais" source="x_482726_cadastro">19b4c4501b55301043784196bc4bcbca</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Cadastro de Filiais">19b4c4501b55301043784196bc4bcbca</sys_scope>
+            <sys_update_name>sys_documentation_x_482726_cadastro_cadastro_de_filiais_sys_class_name_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-07-07 21:57:08</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>
