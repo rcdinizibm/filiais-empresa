@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element label="Cadastro de Filiais" max_length="40" name="x_482726_cadastro_cadastro_de_filiais" type="collection">
-        <element label="Bairro" max_length="40" name="bairro" type="string"/>
+    <element label="Cadastro de Filiais" max_length="40" name="x_482726_cadastro_cadastro_de_filiais" sizeclass="0" type="collection">
+        <element label="Bairro" mandatory="true" max_length="40" name="bairro" type="string"/>
         <element label="CEP" mandatory="true" max_length="9" name="cep" type="string"/>
-        <element label="Cidade" max_length="40" name="cidade" type="string"/>
+        <element label="Cidade" mandatory="true" max_length="40" name="cidade" type="string"/>
         <element label="Complemento" max_length="40" name="complemento" type="string"/>
-        <element label="Endereço" max_length="40" name="endereco" type="string"/>
-        <element display="true" label="Estado" max_length="40" name="estado" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="Nome da Filial" max_length="80" name="nome_da_filial" type="string"/>
+        <element label="Endereço" mandatory="true" max_length="40" name="endereco" type="string"/>
+        <element display="true" label="Estado" mandatory="true" max_length="40" name="estado" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Nome da Filial" mandatory="true" max_length="80" name="nome_da_filial" type="string"/>
         <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
-        <element label="Número" max_length="40" name="numero" type="integer"/>
+        <element label="Número" mandatory="true" max_length="40" name="numero" type="integer"/>
         <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
         <index name="index">
             <element name="sys_class_name"/>
