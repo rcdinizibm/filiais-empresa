@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
     <sys_script_client action="INSERT_OR_UPDATE">
-        <active>false</active>
+        <active>true</active>
         <applies_extended>false</applies_extended>
         <condition/>
-        <description>Client-side script that encapsulates the call to a server-side script, which in turn makes a call to the post office ICorreios) public API to retrieve address and location information with the zip code (CEP) entered</description>
+        <description>Client-side script that encapsulates the call to a server-side script, which in turn makes a call to the Post Office (Correios) public API to retrieve address and location information with the zip code (CEP) entered</description>
         <field>cep</field>
         <global>true</global>
         <isolate_script>true</isolate_script>
@@ -11,12 +11,85 @@
         <name>CEP onChange</name>
         <order/>
         <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
-   if (isLoading || newValue === '') {
-      return;
-   }
+	
+	
+	//Debug message
+	//alert('CEP On Change Triggered!');
+	//return;
+	
+	if (isLoading || newValue === '') {
+		return;
+	}
 
-   //Type appropriate comment here, and begin script below
-   
+	//Storing the CEP as inputed in a variable and uses a 
+	//regular expression to replace all non digit characters ˆ\D (non-digit) with a modifier /g (search the entire string field)
+	var cepFilial = g_form.getValue('cep');
+	
+	var cepFilialOnlyDigits = cepFilial.replace(/[ˆ\D]/g, '');
+	
+	//Debug message
+	//alert('CEP Numérico: ' + cepFilialOnlyDigits);
+	
+	//Validade the cep again basically with a new RegEx  pattern to confirm the size (8), but validates again only numbers [ˆ0-9]
+	var regularExpressionToValidateCepFormat = /[ˆ0-9]{8}$/;
+	
+	if (regularExpressionToValidateCepFormat.test(cepFilialOnlyDigits)) {
+		
+		
+		var restMsgAjax = new GlideAjax('RESTMessageClientCallable');
+		
+		//HardCoded because I know here in this form I need to use this Rest, but all can be refactored to be more generic and reusable
+		var nameCustomRESTRecCreated = 'Fetch_Address_Correios_API_by_CEP';
+		var httpMethod = 'get';
+		var format = 'json';
+		//Related to the 'Fetch_Address_Correios_API_by_CEP' REST Record Created in Outbound REST module
+		var restFunction = 'Default GET';
+		var erroMsg;
+		
+		restMsgAjax.addParam('sysparam_nameRest', nameCustomRESTRecCreated);
+		restMsgAjax.addParam('sysparam_httpMethod', httpMethod);
+		restMsgAjax.addParam('sysparam_returnFormat', format);
+		restMsgAjax.addParam('sysparam_searchParamValue', cepFilialOnlyDigits);
+		restMsgAjax.addParam('sysparam_restFunction', restFunction);
+		
+		//Function to be execute on the Server
+		restMsgAjax.addParam('sysparm_name','executeCall');
+
+		try {
+			//Invocação assícrona com determinação da função de callback
+			restMsgAjax.getXMLAnswer(apiCallBackAnswer);
+		} catch (ex) {
+			erroMsg = "Ocorreu um erro ao chamar a API https://viacep.com.br, favor verificar se a mesma está okay. Erro:" + ex.message;
+			alert(erroMsg);
+		}		
+		
+		//Debug message
+		//alert('O CEP está no formato certo!');
+		
+	} else {
+		alert('CEP inválido, por favor verifique');
+	}
+	
+	//Call back function
+	function apiCallBackAnswer(answer) {
+		
+		//alert(answer);
+		
+		var parsedAddressData = JSON.parse(answer);
+		
+		//alert(parsedAddressData.logradouro);
+		
+		g_form.setValue('cep', parsedAddressData.cep);
+		g_form.setValue('endereco', parsedAddressData.logradouro);
+		g_form.setValue('bairro', parsedAddressData.bairro);
+		g_form.setValue('complemento', parsedAddressData.complemento);
+		g_form.setValue('cidade', parsedAddressData.localidade);
+		g_form.setValue('estado', parsedAddressData.uf);
+		
+	}	
+	
+	return;		
+ 
 }]]></script>
         <sys_class_name>sys_script_client</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -24,7 +97,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>0507e7d01b9d301043784196bc4bcb3f</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>36</sys_mod_count>
         <sys_name>CEP onChange</sys_name>
         <sys_overrides/>
         <sys_package display_value="Cadastro de Filiais" source="x_482726_cadastro">19b4c4501b55301043784196bc4bcbca</sys_package>
@@ -32,7 +105,7 @@
         <sys_scope display_value="Cadastro de Filiais">19b4c4501b55301043784196bc4bcbca</sys_scope>
         <sys_update_name>sys_script_client_0507e7d01b9d301043784196bc4bcb3f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2021-07-08 14:23:33</sys_updated_on>
+        <sys_updated_on>2021-07-14 00:13:13</sys_updated_on>
         <table>x_482726_cadastro_cadastro_de_filiais</table>
         <type>onChange</type>
         <ui_type>10</ui_type>

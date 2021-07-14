@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_482726_cadastro.RESTMessageClientCallable</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Nesta primeira versão recebe como parâmteros o nome do objeto REST previamente criado, o formato de retorno (i.e json, xml, plain text, etc) e o método http a ser usado (GET,PUT, POST). Nesta primeira versão vai atender basicamente à chamada de uma API de endereços dos correios no Brasil, retornando valores de endereço (rua, bairro, cidade, etc), mas já está sendo construída como genérica para poder atender outros use cases (ou seja, não hardcode específcicos), basta nas próximas iterações apenas ampliar a funcionalidade (outros tipos de url básica, tipos de autorização, credenciais, etc).</description>
+        <name>RESTMessageClientCallable</name>
+        <script><![CDATA[/*************************************
+  x_482726_cadastro.RESTMessageClientCallable
+ *************************************/
+var RESTMessageClientCallable = Class.create();
+
+RESTMessageClientCallable.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	
+	executeCall :function() {  
+
+		gs.isDebugging(true);
+		
+		var nameRest = this.getParameter('sysparam_nameRest');
+		var httpMethod = this.getParameter('sysparam_httpMethod');
+		var returnFormat = this.getParameter('sysparam_returnFormat');
+		var searchParamValue = this.getParameter('sysparam_searchParamValue');
+		var restFunction = this.getParameter('sysparam_restFunction');
+					
+		gs.info("##" + nameRest + "#");
+	
+		try{
+			gs.isDebugging(true);
+			
+			var request  = new sn_ws.RESTMessageV2(nameRest, restFunction);        
+			request.setHttpMethod(httpMethod);
+			request.setStringParameterNoEscape('cep', searchParamValue);
+			request.setStringParameterNoEscape('format', returnFormat);     
+
+			var response = request.execute();        
+			var httpResponseStatus = response.getStatusCode();
+			gs.info("*"+ httpResponseStatus);
+			var responseBody = response.getBody();
+			gs.info("*responseBody " + responseBody);
+
+		} catch(ex){
+			var message  = ex.getMessage();        
+			gs.error("**"+ message);
+			throw('Erro ao chamar a API, favor verificar ou tentar mais tarde. Erro:' + message);
+		}	
+		
+		return responseBody;
+				
+	},	
+	
+type: 'RESTMessageClientCallable'	
+	
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-07-12 20:23:17</sys_created_on>
+        <sys_id>c13069391b51301043784196bc4bcb14</sys_id>
+        <sys_mod_count>99</sys_mod_count>
+        <sys_name>RESTMessageClientCallable</sys_name>
+        <sys_package display_value="Cadastro de Filiais" source="x_482726_cadastro">19b4c4501b55301043784196bc4bcbca</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="Cadastro de Filiais">19b4c4501b55301043784196bc4bcbca</sys_scope>
+        <sys_update_name>sys_script_include_c13069391b51301043784196bc4bcb14</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-07-14 00:15:35</sys_updated_on>
+    </sys_script_include>
+</record_update>

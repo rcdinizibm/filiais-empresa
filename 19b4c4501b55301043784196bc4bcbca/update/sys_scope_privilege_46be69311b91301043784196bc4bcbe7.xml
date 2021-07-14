@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_scope_privilege">
+    <sys_scope_privilege action="INSERT_OR_UPDATE">
+        <operation>read</operation>
+        <source_scope display_value="Cadastro de Filiais">19b4c4501b55301043784196bc4bcbca</source_scope>
+        <status>allowed</status>
+        <sys_class_name>sys_scope_privilege</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-07-12 21:23:30</sys_created_on>
+        <sys_id>46be69311b91301043784196bc4bcbe7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>sys_user</sys_name>
+        <sys_package display_value="Cadastro de Filiais" source="x_482726_cadastro">19b4c4501b55301043784196bc4bcbca</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Cadastro de Filiais">19b4c4501b55301043784196bc4bcbca</sys_scope>
+        <sys_update_name>sys_scope_privilege_46be69311b91301043784196bc4bcbe7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-07-12 21:23:30</sys_updated_on>
+        <target_name>sys_user</target_name>
+        <target_scope display_value="Global">global</target_scope>
+        <target_type>sys_db_object</target_type>
+    </sys_scope_privilege>
+</record_update>
